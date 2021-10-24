@@ -104,7 +104,7 @@ const Editor = (function() {
       return [{ parsed: '', originalText: '', textOffset: 0 }];
     }
     let parsedTokens = [];
-    let tokens = text.split(/(\n+| +|\(|\))/).filter(token => token);
+    let tokens = text.split(/(\n| +|\(|\))/).filter(token => token);
     let parsedChars = 0;
     tokens.forEach((token) => {
       let originalText = token;
@@ -161,9 +161,9 @@ const Editor = (function() {
     let parsedTokens = parseInput(inputText);
     let inputSelection = context.input.selectionStart;
     insertCaret(parsedTokens, inputSelection, context.inputFocused);
-    context.display.innerHTML = '<p>' + parsedTokens.reduce((html, currToken) => {
-      return html + currToken.parsed;
-    }, '') + '</p>';
+    let html = parsedTokens.reduce((html, token) => html + token.parsed, '');
+    html = html.replace(new RegExp('<p></p>', 'g'), '<p> </p>');
+    context.display.innerHTML = '<p>' + html + '</p>';
     let charAtCaret = getCharAtCaret(context);
     if (charAtCaret && charAtCaret.character === ')') {
       highlightMatchingParen(context, charAtCaret.node);
