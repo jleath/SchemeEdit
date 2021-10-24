@@ -109,7 +109,6 @@ const Editor = (function() {
     tokens.forEach((token) => {
       let originalText = token;
       token = token.replace(SCHEME_KEYWORD_REGEX, '<span class="keyword">$&</span>');
-      token = token.replace("\n\n", '</p><p> </p><p>')
       token = token.replace("\n", '</p><p>');
       if (token && token.match(/\S/) && !Number.isNaN(Number(token))) {
         token = `<span class="number-literal">${token}</span>`;
@@ -161,9 +160,9 @@ const Editor = (function() {
     let parsedTokens = parseInput(inputText);
     let inputSelection = context.input.selectionStart;
     insertCaret(parsedTokens, inputSelection, context.inputFocused);
-    let html = parsedTokens.reduce((html, token) => html + token.parsed, '');
+    let html = '<p>' + parsedTokens.reduce((html, token) => html + token.parsed, '') + '</p>';
     html = html.replace(new RegExp('<p></p>', 'g'), '<p> </p>');
-    context.display.innerHTML = '<p>' + html + '</p>';
+    context.display.innerHTML = html;
     let charAtCaret = getCharAtCaret(context);
     if (charAtCaret && charAtCaret.character === ')') {
       highlightMatchingParen(context, charAtCaret.node);
