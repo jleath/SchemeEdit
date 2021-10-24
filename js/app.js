@@ -108,10 +108,10 @@ const Editor = (function() {
     let parsedChars = 0;
     tokens.forEach((token) => {
       let originalText = token;
-      token = token.replace(SCHEME_KEYWORD_REGEX, '<span class="keyword">$&</span>');
-      token = token.replace("\n", '</p><p>');
       token = token.replace(new RegExp('<', 'g'), '&lt');
       token = token.replace(new RegExp('>', 'g'), '&gt');
+      token = token.replace(SCHEME_KEYWORD_REGEX, '<span class="keyword">$&</span>');
+      token = token.replace("\n", '</p><p>');
       if (token && token.match(/\S/) && !Number.isNaN(Number(token))) {
         token = `<span class="number-literal">${token}</span>`;
       }
