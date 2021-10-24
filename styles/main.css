@@ -1,0 +1,89 @@
+@import url("https://cdn.jsdelivr.net/npm/@xz/fonts@1/serve/cascadia-code.min.css");
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #292929;
+}
+
+html,
+body,
+#editor {
+  height: 100%;
+}
+
+#editor-display {
+  background: #191919;
+  height: 100%;
+  padding: 15px;
+  width: 100%;
+  white-space: pre;
+  overflow: scroll;
+}
+
+#editor-display::-webkit-scrollbar {
+  width: 1em;
+}
+
+#editor-display::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+#editor-display::-webkit-scrollbar-thumb {
+  background-color: rgb(87, 85, 85);
+  outline: 1px solid slategrey;
+}
+
+#editor-display::-webkit-scrollbar-corner {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+#editor-display p {
+  color: oldlace;
+  font-size: 14px;
+  font-family: 'Cascadia Code', sans-serif;
+  line-height: 1.5rem;
+}
+
+#editor-input {
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  z-index: -5;
+}
+
+#caret {
+  white-space: pre;
+  background-color: #696969;
+}
+
+.matched-paren {
+  background: #696969;
+}
+
+.bad-paren {
+  background: rgb(112, 34, 6);
+  opacity: 0.5;
+}
+
+.blinking {
+  animation-name: blink;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes blink {
+  50% {
+    background: transparent;
+  }
+}
+
+span.keyword {
+  color: #597BC5;
+}
+
+span.number-literal {
+  color: #FFB964;
+}
