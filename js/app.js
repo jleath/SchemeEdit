@@ -32,11 +32,11 @@ const Editor = (function() {
     this.editorDiv = editorDiv;
     this.display = createComponent(editorDiv, DISPLAY_TAG, DISPLAY_ID, 'editor-panel');
     this.input = createComponent(editorDiv, INPUT_TAG, INPUT_ID, 'editor-panel');
+    this.display.innerHTML = "<p>Welcome to SchemeEdit!</p><p>Start typing to dismiss this message.</p>";
     this.input.focus();
     this.inputFocused = true;
     this.keyPressed = false;
     bindEvents(this);
-    updateDisplay(this);
   }
 
   function createComponent(parent, tag, id, className) {
@@ -58,12 +58,18 @@ const Editor = (function() {
 
   function handleFocus(event) {
     this.inputFocused = true;
-    updateDisplay(this);
+    let caret = document.querySelector('#caret');
+    if (caret) {
+      caret.classList.add('blinking');
+    }
   }
 
   function handleBlur(event) {
     this.inputFocused = false;
-    updateDisplay(this);
+    let caret = document.querySelector('#caret');
+    if (caret) {
+      caret.classList.remove('blinking');
+    }
   }
 
   function handleKeydown(event) {
@@ -159,7 +165,6 @@ const Editor = (function() {
       return html + currToken.parsed;
     }, '') + '</p>';
     let charAtCaret = getCharAtCaret(context);
-    console.log(charAtCaret);
     if (charAtCaret && charAtCaret.character === ')') {
       highlightMatchingParen(context, charAtCaret.node);
     }
