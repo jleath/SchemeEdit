@@ -110,6 +110,8 @@ const Editor = (function() {
       let originalText = token;
       token = token.replace(SCHEME_KEYWORD_REGEX, '<span class="keyword">$&</span>');
       token = token.replace("\n", '</p><p>');
+      token = token.replace(new RegExp('<', 'g'), '&lt');
+      token = token.replace(new RegExp('>', 'g'), '&gt');
       if (token && token.match(/\S/) && !Number.isNaN(Number(token))) {
         token = `<span class="number-literal">${token}</span>`;
       }
@@ -134,15 +136,6 @@ const Editor = (function() {
         token.parsed += caretHTML(inputFocused, ' ');
       } else {
         token.parsed = caretHTML(inputFocused, ' ') + token.parsed;
-      }
-    } else if (token.parsed === '</p><p> </p><p>') {
-      if (token.textOffset === caretPosition) {
-        token.parsed = caretHTML(inputFocused, ' ') + token.parsed;
-      }
-      else if (endOffset === caretPosition) {
-        token.parsed += caretHTML(inputFocused, ' ');
-      } else {
-        token.parsed = '</p><p>' + caretHTML(inputFocused, ' ') + '</p><p>';
       }
     } else if (endOffset === caretPosition) {
       token.parsed += caretHTML(inputFocused, ' ');
