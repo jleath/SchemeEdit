@@ -155,6 +155,11 @@ const Editor = (function() {
     insertCaret(parsedTokens, inputSelection, context.inputFocused);
     let html = '<p>' + parsedTokens.reduce((html, token) => html + token.parsed, '') + '</p>';
     html = html.replace(new RegExp('<p></p>', 'g'), '<p> </p>');
+    let lineNumber = 0;
+    html = html.replace(new RegExp('<p>', 'g'), () => {
+      lineNumber += 1;
+      return `<p><span class="gutter">${lineNumber}</span>`;
+    });
     context.display.innerHTML = html;
     let charAtCaret = getCharAtCaret(context);
     if (charAtCaret && charAtCaret.character === ')') {
